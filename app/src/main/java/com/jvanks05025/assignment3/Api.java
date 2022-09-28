@@ -6,8 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
 public interface Api {
-    String BASE_URL="https://corona.lmao.ninja/";
-    @Headers({"Cache-Control: max-age=640000"})
-    @GET("v2/all")
+    String BASE_URL="https://disease.sh/";
+    @GET("v3/covid-19/all")
     Call<CovidTracker> getData();
 }

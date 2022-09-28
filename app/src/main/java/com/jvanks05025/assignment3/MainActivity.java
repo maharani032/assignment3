@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void getData() {
         Call<CovidTracker> call=RetrofitClient.getInstance().getMyApi().getData();
-
         call.enqueue(new Callback<CovidTracker>() {
             @Override
             public void onResponse(Call<CovidTracker> call, Response<CovidTracker> response) {
@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"response successfull",Toast.LENGTH_LONG).show();
-                    Log.i("covidtracker","response body !=null");
+                    CovidTracker covidTracker= response.body();
+                    total_cases.setText(covidTracker.getCases());
+                    total_recovered.setText(covidTracker.getRecovered());
+                    total_deaths.setText(covidTracker.getDeaths());
                 }
             }
 
@@ -54,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<CovidTracker> call, Throwable t) {
 
             }
-
         });
 
     }
